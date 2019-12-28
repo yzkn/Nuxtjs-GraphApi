@@ -33,6 +33,11 @@ export default {
   },
   created() {
     console.log(process.env.GRAPH_CLIENT_ID);
+    if (process.client) {
+      // if (!this.$msal.isAuthenticated()) {
+      this.$msal.signIn();
+      // }
+    }
   }
 };
 </script>
