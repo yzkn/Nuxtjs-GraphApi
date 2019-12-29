@@ -84,6 +84,13 @@
             >Sign in</b-button
           >
         </div>
+        <div v-if="teams">
+          <ul id="example-1">
+            <li v-for="team in teams" v-bind:key="team.id">
+              {{ team.id }}
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="links">
         <a href="https://nuxtjs.org/" target="_blank" class="button--green">
@@ -123,6 +130,16 @@ export default {
         }
       }
       return user;
+    },
+    async teams() {
+      let teams = null;
+      if (this.msal.isAuthenticated) {
+        if (this.msal.graph) {
+          teams = await this.$msal.msGraph("/me/joinedTeams");
+        }
+      }
+      console.log(teams);
+      return teams;
     }
   },
   created() {
